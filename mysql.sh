@@ -39,12 +39,19 @@ if [ "$1" -eq "0" ] # Validating previous command success or not.
 dnf list installed mysql-server
 if [ "$?" -eq  "0" ]
 then 
-   echo " mysql-server is aleady Installed "
+   echo -e " Mysql-Server is aleady ...$BLUE Installed $NOCOLOR "
 else 
     dnf install mysql-server -y
     VALIDATION "$?" "Installing-Mysql-Server"
 fi
 
-# enabling & starting the server 
+# Enabling & starting the server 
 systemctl  enable --now mysqld
-VALIDATION "$?" "Enabling & Started-Mysql-Server"
+VALIDATION "$?" "Enabled & Started-Mysql-Server"
+
+# Creating root password for Mysql-server
+mysql_secure_installation --set-root-pass ExpenseApp@1
+VALIDATION "$?" " Created Root Password "
+
+
+
