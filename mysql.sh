@@ -28,9 +28,9 @@ VALIDATION(){
 
 if [ "$1" -eq "0" ] # Validating previous command success or not.
         then
-            echo -e  " "$2" Installing....$GREEN SUCCESS $NOCOLOR "    #Informing to user.
+            echo -e  " "$2"...$GREEN SUCCESS $NOCOLOR "    #Informing to user.
         else
-            echo  -e " "$2" Installing....$RED FAILED $NOCOLOR"      #Informing to user.
+            echo  -e " "$2"....$RED FAILED $NOCOLOR"      #Informing to user.
             exit 1
         fi
 }
@@ -42,7 +42,9 @@ then
    echo " mysql-server is aleady Installed "
 else 
     dnf install mysql-server -y
-    VALIDATION $? mysql-server
+    VALIDATION "Installing-Mysql-Server"
 fi
 
-
+# enabling & starting the server 
+systemctl  enable --now mysqld
+VALIDATION "Enabling & Started-Mysql-Server"
