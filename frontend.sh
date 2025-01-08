@@ -19,6 +19,23 @@ then
     exit 1
 fi
 
+# Function to show a spinner
+show_spinner() {
+  local pid=$1
+  local delay=0.1
+  local spinstr='|/-\'
+  
+  echo -n "Installing Nginx... "
+  while [ "$(ps a | awk '{print $1}' | grep "$pid")" ]; do
+    local temp=${spinstr#?}
+    printf " [%c]  " "$spinstr"
+    local spinstr=$temp${spinstr%"$temp"}
+    sleep $delay
+    printf "\b\b\b\b\b\b"
+  done
+  echo "Done!"
+}
+
 
 ## Validation function
 
@@ -34,14 +51,16 @@ fi
 }
 
 ## Check Nginx already installed or not
-dnf list installed nginx   &>>$LOG_FILE_NAME
+dnf list installed nginx    &>>$LOG_FILE_NAME
 if [ "$?" -eq "0" ]
 then
     echo -e " $GREEN Nodejs $NOCOLOR module is aleady ...$BLUE Installed $NOCOLOR "    
 fi
 
 ## Install Nginx
-dnf install nginx &>>$LOG_FILE_NAME
+dnf install nginx -y &>>$LOG_FILE_NAME
+## show spinner
+show_spinner $!
 VALIDATION "$?" " Installing Nginx "
 
 ## Enable nginx
