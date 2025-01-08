@@ -6,6 +6,7 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NOCOLOR='\033[0m'
 BLUE='\033[0;34m'
+mkdir -p /var/shell-script-logs
 LOG_FOLDER="/var/shell-script-logs"
 TIME_STAMP=$(date +%d.%m.%y:%H-%M-%S)
 SCRIPT_NAME=`echo $0 | awk -F "." '{print $1}'`
@@ -36,12 +37,12 @@ if [ "$1" -eq "0" ] # Validating previous command success or not.
 }
 
 # Check is server already installed
-dnf list installed mysql-server
+dnf list installed mysql-server  &>>$LOG_FILE_NAME
 if [ "$?" -eq  "0" ]
 then 
    echo -e " Mysql-Server is aleady ...$BLUE Installed $NOCOLOR "
 else 
-    dnf install mysql-server -y
+    dnf install mysql-server -y  &>>$LOG_FILE_NAME
     VALIDATION "$?" "Installing-Mysql-Server"
 fi
 
