@@ -47,4 +47,4 @@ fi
 
 # enabling & starting the server 
 systemctl  enable --now mysqld
-VALIDATION "Enabling & Started-Mysql-Server"
+VALIDATION "$1" "Enabling & Started-Mysql-Server"
