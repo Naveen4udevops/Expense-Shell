@@ -47,12 +47,12 @@ else
 fi
 
 # Enabling & starting the server 
-systemctl  enable --now mysqld
+systemctl  enable --now mysqld &>>$LOG_FILE_NAME
 VALIDATION "$?" "Enabled & Started-Mysql-Server"
 
 # Creating root password for Mysql-server
 mysql_secure_installation --set-root-pass ExpenseApp@1
-VALIDATION "$?" " Created Root Password "
+VALIDATION "$?" " Created Root Password  "
 
 
 
