@@ -28,22 +28,20 @@ fi
 VALIDATION(){
 
 if [ "$1" -eq "0" ] # Validating previous command success or not.
-        then
-            echo -e  " "$2"...$GREEN SUCCESS $NOCOLOR "    #Informing to user.
-        else
-            echo  -e " "$2"....$RED FAILED $NOCOLOR"      #Informing to user.
-            exit 1
-        fi
+then
+    echo -e  " "$2"...$GREEN SUCCESS $NOCOLOR "    #Informing to user.
+else
+    echo  -e " "$2"....$RED FAILED $NOCOLOR"       #Informing to user.
+    exit 1
+fi
 }
-
+ 
 ## Check nodejs already installed or not
 dnf list installed nodejs   &>>$LOG_FILE_NAME
-
-if [ "$? -eq "0" ]
+if [ "$?" -eq "0" ]
 then
-    echo -e " $GREEN Nodejs $NOCOLOR module is aleady ...$BLUE Installed $NOCOLOR "
+    echo -e " $GREEN Nodejs $NOCOLOR module is aleady ...$BLUE Installed $NOCOLOR "    
 else
-
 #   Disabling default nodejs.module
     dnf module disable nodejs -y   &>>$LOG_FILE_NAME
     VALIDATION "$?" " Disabled Default Nodejs Module "
