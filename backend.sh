@@ -65,7 +65,7 @@ fi
 
 #   Download the application code to created app directory.
     rm -rf /tmp/backend.zip  # Before downloading removig if any existing backend zip file
-    curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip 
+    curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip  &>>$LOG_FILE_NAME
     VALIDATION "$?" " Downloaded Backend-code "
  
 #   Go to the app directory 
@@ -93,13 +93,15 @@ fi
 # load Expense data base schema to the Database, Which came along with the Backend code. 
   # To do that First we need to Install mySql client here, to connect to MYsql-server
 
-   dnf install mysql -y
+   dnf install mysql -y   &>>$LOG_FILE_NAME
    VALIDATION "$?" "Installed MySQl-Client"
 
-   mysql -h 172.31.22.114 -uroot -pExpenseApp@1 < /app/schema/backend.sql
+   mysql -h 172.31.22.114 -uroot -pExpenseApp@1 < /app/schema/backend.sql   &>>$LOG_FILE_NAME
    VALIDATION "$?" "Loading Database Schema to Mysql-Server"
 
 # Restart the service once after loading Database Schema to Mysql-server
    systemctl restart backend
 
-fi
+# checking telnt connection to 
+
+
