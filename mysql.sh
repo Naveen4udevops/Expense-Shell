@@ -37,7 +37,7 @@ if [ "$1" -eq "0" ] # Validating previous command success or not.
 
 # Check is server already installed
 dnf list installed mysql-server
-if [ "$?" -eq  "0"]
+if [ "$?" -eq  "0" ]
 then 
    echo " mysql-server is aleady Installed "
 else 
