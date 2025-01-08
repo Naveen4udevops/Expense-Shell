@@ -56,7 +56,7 @@ fi
     VALIDATION "$?" " Installed Nodejs Module "
 
 #   adding normal user to start backend service with limited privilages
-    userdel expense &>>$LOG_FILE_NAME
+    userdel expense &>>$LOG_FILE_NAME 
     useradd expense &>>$LOG_FILE_NAME
     VALIDATION "$?" " User Added "
 
