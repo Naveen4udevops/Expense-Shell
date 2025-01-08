@@ -51,7 +51,7 @@ systemctl  enable --now mysqld &>>$LOG_FILE_NAME
 VALIDATION "$?" "Enabled & Started-Mysql-Server"
 
 # Creating root password for Mysql-server
-mysql_secure_installation --set-root-pass ExpenseApp@1
+mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE_NAME
 VALIDATION "$?" " Created Root Password  "
 
 
