@@ -20,3 +20,29 @@ then
     echo -e "  $RED ERROR:: $NOCOLOR  You Must Have Sudo Access to Execute This Script  "
     exit 1
 fi
+
+
+## Validation function
+
+VALIDATION(){
+
+if [ "$1" -eq "0" ] # Validating previous command success or not.
+        then
+            echo -e  " "$2" Installing....$GREEN SUCCESS $NOCOLOR "    #Informing to user.
+        else
+            echo  -e " "$2" Installing....$RED FAILED $NOCOLOR"      #Informing to user.
+            exit 1
+        fi
+}
+
+# Check is server already installed
+dnf list installed mysql-server
+if [ "$?" -eq  "0"]
+then 
+   echo " mysql-server is aleady Installed "
+else 
+    dnf install mysql-server -y
+    VALIDATION $? mysql-server
+fi
+
+
