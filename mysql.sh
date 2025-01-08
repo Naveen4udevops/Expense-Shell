@@ -42,9 +42,9 @@ then
    echo " mysql-server is aleady Installed "
 else 
     dnf install mysql-server -y
-    VALIDATION "Installing-Mysql-Server"
+    VALIDATION "$?" "Installing-Mysql-Server"
 fi
 
 # enabling & starting the server 
 systemctl  enable --now mysqld
-VALIDATION "$1" "Enabling & Started-Mysql-Server"
+VALIDATION "$?" "Enabling & Started-Mysql-Server"
