@@ -81,7 +81,7 @@ fi
    VALIDATION "$?" " Dependencies Installed "
 
 #  Setup SystemD Expense Backend Service to run backend code as a Service
-   cp Backend.service /etc/systemd/system/backend.service
+   cp /home/ec2-user/Expense-Shell/Backend.service  /etc/systemd/system/backend.service
 
 #  Load the services, Since new sevice has added in SystemD.
    systemctl daemon-reload
