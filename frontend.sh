@@ -32,3 +32,33 @@ else
     exit 1
 fi
 }
+
+## Check Nginx already installed or not
+dnf list installed nginx   &>>$LOG_FILE_NAME
+if [ "$?" -eq "0" ]
+then
+    echo -e " $GREEN Nodejs $NOCOLOR module is aleady ...$BLUE Installed $NOCOLOR "    
+fi
+
+## Enable nginx
+systemctl enable --now nginx   &>>$LOG_FILE_NAME
+VALIDATION "$?" " Enabling & Staring Nginx "
+
+## Remove the default content that web server is serving.
+rm -rf /usr/share/nginx/html/*
+
+## Download the frontend content
+rm -rf /tmp/frontend.zip ## Making sure to remove the zip file if already exists
+curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip  &>>$LOG_FILE_NAME
+
+## Extract the frontend content.
+cd /usr/share/nginx/html  ## going in to the nginix html code path
+unzip /tmp/frontend.zip &>>$LOG_FILE_NAME  
+VALIDATION "$?" "Unzippinng Frontend code Zip file"
+
+## Restart Nginx Service to load the changes of the configuration.
+systemctl restart nginx &>>$LOG_FILE_NAME  
+
+
+
+
