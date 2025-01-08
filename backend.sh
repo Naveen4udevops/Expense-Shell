@@ -96,7 +96,7 @@ fi
    dnf install mysql -y
    VALIDATION "$?" "Installed MySQl-Client"
 
-   mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pExpenseApp@1 < /app/schema/backend.sql
+   mysql -h 172.31.22.114 -uroot -pExpenseApp@1 < /app/schema/backend.sql
    VALIDATION "$?" "Loading Database Schema to Mysql-Server"
 
 # Restart the service once after loading Database Schema to Mysql-server
