@@ -41,7 +41,8 @@ dnf list installed nodejs   &>>$LOG_FILE_NAME
 if [ "$?" -eq "0" ]
 then
     echo -e " $GREEN Nodejs $NOCOLOR module is aleady ...$BLUE Installed $NOCOLOR "    
-else
+fi
+
 #   Disabling default nodejs.module
     dnf module disable nodejs -y   &>>$LOG_FILE_NAME
     VALIDATION "$?" " Disabled Default Nodejs Module "
