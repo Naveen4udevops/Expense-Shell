@@ -56,6 +56,9 @@ cd /usr/share/nginx/html  ## going in to the nginix html code path
 unzip /tmp/frontend.zip &>>$LOG_FILE_NAME  
 VALIDATION "$?" "Unzippinng Frontend code Zip file"
 
+## Loading the reversee proxy config file
+cp /home/ec2-user/Expense-Shell/expense.conf  /etc/nginx/default.d/expense.conf
+
 ## Restart Nginx Service to load the changes of the configuration.
 systemctl restart nginx &>>$LOG_FILE_NAME  
 
