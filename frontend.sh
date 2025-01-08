@@ -40,6 +40,10 @@ then
     echo -e " $GREEN Nodejs $NOCOLOR module is aleady ...$BLUE Installed $NOCOLOR "    
 fi
 
+## Install Nginx
+dnf list install nginx &>>$LOG_FILE_NAME
+VALIDATION "$?" " Installing Nginx "
+
 ## Enable nginx
 systemctl enable --now nginx   &>>$LOG_FILE_NAME
 VALIDATION "$?" " Enabling & Staring Nginx "
