@@ -41,7 +41,7 @@ then
 fi
 
 ## Install Nginx
-dnf list install nginx &>>$LOG_FILE_NAME
+dnf install nginx &>>$LOG_FILE_NAME
 VALIDATION "$?" " Installing Nginx "
 
 ## Enable nginx
