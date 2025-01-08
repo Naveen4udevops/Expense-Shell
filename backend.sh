@@ -41,49 +41,49 @@ dnf list installed nodejs   &>>$LOG_FILE_NAME
 
 if [ "$? -eq "0" ]
 then
-   echo -e " $GREEN Nodejs $NOCOLOR module is aleady ...$BLUE Installed $NOCOLOR "
+    echo -e " $GREEN Nodejs $NOCOLOR module is aleady ...$BLUE Installed $NOCOLOR "
 else
 
 #   Disabling default nodejs.module
     dnf module disable nodejs -y   &>>$LOG_FILE_NAME
     VALIDATION "$?" " Disabled Default Nodejs Module "
 
-# Enabling nodejs module
+#   Enabling nodejs module
     dnf module enable nodejs:20 -y   &>>$LOG_FILE_NAME
     VALIDATION "$?" " Enabled latest Nodejs Module "
 
-# Installing nodejs module
+#   Installing nodejs module
     dnf install nodejs -y   &>>$LOG_FILE_NAME
     VALIDATION "$?" " Installed Nodejs Module "
 
-# adding normal user to start backend service with limited privilages
+#   adding normal user to start backend service with limited privilages
     useradd expense &>>$LOG_FILE_NAME
     VALIDATION "$?" " User Added "
 
-# Setup an app directory to keep the Nodejs code"
+#   Setup an app directory to keep the Nodejs code"
     mkdir -p /app &>>$LOG_FILE_NAME
 
-# Download the application code to created app directory.
+#   Download the application code to created app directory.
     rm -rf /tmp/backend.zip  # Before downloading removig if any existing backend zip file
     curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip 
     VALIDATION "$?" " Downloaded Backend-code "
  
-# Go to the app directory 
+#   Go to the app directory 
     cd /app   &>>$LOG_FILE_NAME
 
-# Unzip the code to the app directory
+#  Unzip the code to the app directory
    rm -rf /app/* &>>$LOG_FILE_NAME
    unzip /tmp/backend.zip  &>>$LOG_FILE_NAME
    VALIDATION "$?" " Unzip Downloaded Backend-code "
 
-# Lets download the dependencies.
+#  Lets download the dependencies.
    npm install &>>$LOG_FILE_NAME
    VALIDATION "$?" " Dependencies Installed "
 
-# Setup SystemD Expense Backend Service to run backend code as a Service
+#  Setup SystemD Expense Backend Service to run backend code as a Service
    cp Backend.service /etc/systemd/system/backend.service
 
-# Load the services, Since new sevice has added in SystemD.
+#  Load the services, Since new sevice has added in SystemD.
    systemctl daemon-reload
 
 # Enable & Start the backend Service to starte Connection between "Backend-Server & Mysql-server"
@@ -93,13 +93,13 @@ else
 # load Expense data base schema to the Database, Which came along with the Backend code. 
   # To do that First we need to Install mySql client here, to connect to MYsql-server
 
-  dnf install mysql -y
-  VALIDATION "$?" "Installed MySQl-Client"
+   dnf install mysql -y
+   VALIDATION "$?" "Installed MySQl-Client"
 
-  mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pExpenseApp@1 < /app/schema/backend.sql
-  VALIDATION "$?" "Loading Database Schema to Mysql-Server"
+   mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pExpenseApp@1 < /app/schema/backend.sql
+   VALIDATION "$?" "Loading Database Schema to Mysql-Server"
 
 # Restart the service once after loading Database Schema to Mysql-server
-  systemctl restart backend
+   systemctl restart backend
 
 fi
