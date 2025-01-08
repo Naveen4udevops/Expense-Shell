@@ -19,23 +19,6 @@ then
     exit 1
 fi
 
-# Function to show a spinner
-show_spinner() {
-  local pid=$1
-  local delay=0.1
-  local spinstr='|/-\'
-  
-  echo -n "Installing Nginx... "
-  while [ "$(ps a | awk '{print $1}' | grep "$pid")" ]; do
-    local temp=${spinstr#?}
-    printf " [%c]  " "$spinstr"
-    local spinstr=$temp${spinstr%"$temp"}
-    sleep $delay
-    printf "\b\b\b\b\b\b"
-  done
-  echo "Done!"
-}
-
 
 ## Validation function
 
@@ -59,8 +42,6 @@ fi
 
 ## Install Nginx
 dnf install nginx -y &>>$LOG_FILE_NAME
-## show spinner
-show_spinner $!
 VALIDATION "$?" " Installing Nginx "
 
 ## Enable nginx
